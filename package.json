@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/WISCENTD-UPC/godata-api-wrapper/issues"
   },
-  "homepage": "https://github.com/WISCENTD-UPC/godata-api-wrapper#readme"
+  "homepage": "https://github.com/WISCENTD-UPC/godata-api-wrapper#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
 }
