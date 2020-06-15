@@ -1,17 +1,20 @@
 
 const TOKEN_SAFE_THRESHOLD = 10
 
-async function autoLogin (next, ctx) {
+async function autoLogin (next, ctx, _ = {}) {
   const token = ctx.config.token
   if (token != null && (Date.now() - token.lastRefresh) / 1000 + TOKEN_SAFE_THRESHOLD < token.ttl) {
     ctx.config.query.access_token = token.value
     return next(null, ctx)
   } else {
-    console.log('Refreshing access token')
     try {
-      await ctx.config.api.login()
-      ctx.config.token = ctx.config.api.token
-      ctx.config.query.access_token = ctx.config.token.value
+      const res = await ctx.config.api.login()
+      ctx.config.token = {
+        value: res.id,
+        ttl: res.ttl,
+        lastRefresh: _.date || Date.now()
+      }
+      ctx.config.query.access_token = res.id
       return next(null, ctx)
     } catch (err) {
       return next(err)
@@ -19,5 +22,5 @@ async function autoLogin (next, ctx) {
   }
 }
 
-module.exports = { autoLogin }
+module.exports = { autoLogin, TOKEN_SAFE_THRESHOLD }
 

@@ -6,7 +6,7 @@ const FormData = require('form-data')
 const fetch = require('node-fetch')
 
 // Project modules
-const QueryString = require('./query-string')
+const qs = require('query-string')
 const applyMiddleware = require('./apply-middleware')
 
 module.exports = class Base {
@@ -33,7 +33,7 @@ module.exports = class Base {
       headers['Authorization'] = `bearer ${token}`
       query.access_token = token
     }
-    const response = await this.fetch(this.url(`${path}?${QueryString.stringify(query)}`), {
+    const response = await this.fetch(this.url(`${path}?${qs.stringify(query)}`), {
       credentials: 'include',
       headers
     })
@@ -53,7 +53,7 @@ module.exports = class Base {
     if (headers['Content-Type'] === null) {
       delete headersConfig['Content-Type']
     }
-    const response = await this.fetch(this.url(`${path}?${QueryString.stringify(query)}`), {
+    const response = await this.fetch(this.url(`${path}?${qs.stringify(query)}`), {
       method,
       headers: headersConfig,
       credentials: 'include',
