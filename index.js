@@ -13,6 +13,7 @@ module.exports = class {
     this.credentials = opts.credentials || {}
     this.fetch = opts.fetch || fetch
     this._base = opts._base || new Base({ baseURL: this.baseURL, fetch: this.fetch })
+    this._Date = opts._Date || Date
   }
 
   createRequest (config) {
@@ -33,14 +34,14 @@ module.exports = class {
     this.token = {
       value: response.id,
       ttl: response.ttl,
-      lastRefresh: Date.now()
+      lastRefresh: this._Date.now()
     }
     return response
   }
 
   outbreaks () {
     const request = this.createRequest({
-      middleware: [autoLogin]
+      middleware: [ autoLogin ]
     })
     return this._base.get(ENDPOINTS.OUTBREAKS.OUTBREAKS, request)
   }
