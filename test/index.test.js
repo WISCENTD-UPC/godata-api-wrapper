@@ -29,10 +29,10 @@ test('outbreaks should call correct endpoint with autologin', async () => {
   const base = { get }
   const { APIConfig, api } = createAPI(base)
   
-  const response = await api.outbreaks()
+  const response = await api.getOutbreaks()
 
   expect(response).toStrictEqual([])
-  expect(get).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.OUTBREAKS, {
+  expect(get).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.OUTBREAKS(), {
     api,
     token: undefined,
     middleware: [ autoLogin ]
@@ -57,7 +57,7 @@ function loginTest (credentials) {
 
     const response = await api.login()
 
-    expect(post).toHaveBeenCalledWith(ENDPOINTS.USERS.LOGIN, request)
+    expect(post).toHaveBeenCalledWith(ENDPOINTS.USERS.LOGIN(), request)
     expect(response).toBe(loginResponse)
     expect(api.token).toStrictEqual({
       value: loginResponse.id,

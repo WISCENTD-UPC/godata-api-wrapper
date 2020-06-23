@@ -1,10 +1,12 @@
 
 module.exports = {
   USERS: {
-    LOGIN: '/users/login'
+    LOGIN: () => '/users/login'
   },
   OUTBREAKS: {
-    OUTBREAKS: '/outbreaks'
+    OUTBREAKS: () => '/outbreaks',
+    CREATE_OUTBREAK: () => '/outbreaks',
+    DELETE_OUTBREAK: (id) => `/outbreaks/${id}`
   }
 }
 

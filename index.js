@@ -30,7 +30,7 @@ module.exports = class {
       body: { email, password }
     })
 
-    const response = await this._base.post(ENDPOINTS.USERS.LOGIN, request)
+    const response = await this._base.post(ENDPOINTS.USERS.LOGIN(), request)
     this.token = {
       value: response.id,
       ttl: response.ttl,
@@ -39,11 +39,26 @@ module.exports = class {
     return response
   }
 
-  outbreaks () {
+  getOutbreaks () {
     const request = this.createRequest({
       middleware: [ autoLogin ]
     })
-    return this._base.get(ENDPOINTS.OUTBREAKS.OUTBREAKS, request)
+    return this._base.get(ENDPOINTS.OUTBREAKS.OUTBREAKS(), request)
+  }
+
+  createOutbreak (body) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ],
+      body
+    })
+    return this._base.post(ENDPOINTS.OUTBREAKS.CREATE_OUTBREAK(), request)
+  }
+
+  deleteOutbreak (id) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ]
+    })
+    return this._base.delete(ENDPOINTS.OUTBREAKS.DELETE_OUTBREAK(id), request)
   }
 }
 
