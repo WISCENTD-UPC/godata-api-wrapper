@@ -22,7 +22,6 @@ module.exports = class {
     return config
   }
 
-  // user and passoword
   async login (credentials = {}) {
     const email = credentials.email || this.credentials.email
     const password = credentials.password || this.credentials.password
@@ -37,6 +36,28 @@ module.exports = class {
       lastRefresh: this._Date.now()
     }
     return response
+  }
+
+  getLocations () {
+    const request = this.createRequest({
+      middleware: [ autoLogin ]
+    })
+    return this._base.get(ENDPOINTS.LOCATIONS.LOCATIONS(), request)
+  }
+
+  createLocation (body) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ],
+      body
+    })
+    return this._base.post(ENDPOINTS.LOCATIONS.CREATE_LOCATION(), request)
+  }
+
+  deleteLocation (id) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ]
+    })
+    return this._base.delete(ENDPOINTS.LOCATIONS.DELETE_LOCATION(id), request)
   }
 
   getOutbreaks () {
