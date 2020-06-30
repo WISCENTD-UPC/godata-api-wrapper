@@ -4,7 +4,8 @@
   "description": "Javascript library to handle Go.Data queries easier",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "repository": {
     "type": "git",
