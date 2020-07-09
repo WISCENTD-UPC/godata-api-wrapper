@@ -87,6 +87,10 @@ module.exports = class Base {
     return this.request('POST', path, config)
   }
 
+  patch (path, config) {
+    return this.request('PATCH', path, config)
+  }
+
   put (path, config) {
     return this.request('PUT', path, config)
   }

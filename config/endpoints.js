@@ -1,7 +1,9 @@
 
 module.exports = {
   USERS: {
-    LOGIN: () => '/users/login'
+    LOGIN: () => '/users/login',
+    USERS: () => '/users',
+    PATCH_USER: (userID) => `/users/${userID}`
   },
   LOCATIONS: {
     LOCATIONS: () => '/locations',
@@ -12,6 +14,12 @@ module.exports = {
     OUTBREAKS: () => '/outbreaks',
     CREATE_OUTBREAK: () => '/outbreaks',
     DELETE_OUTBREAK: (id) => `/outbreaks/${id}`
+  },
+  CASES: {
+    OUTBREAK_CASES: (outbreakID) => `/outbreaks/${outbreakID}/cases`,
+    OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
+    CREATE_OUTBREAK_CASE: (outbreakID) => `/outbreaks/${outbreakID}/cases`,
+    DELETE_OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`
   }
 }
 
