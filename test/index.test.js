@@ -24,105 +24,176 @@ test('login with api credentials', loginTest(null))
 
 test('login with other credentials', loginTest({ email: uuid(), password: uuid() }))
 
-test('getLocations should call correct endpoint with authlogin', async () => {
-  const get = jest.fn().mockReturnValue([])
-  const base = { get }
-  const { api } = createAPI(base)
+test('Get users', simpleRouteTest({
+  apiHandler: 'getUsers',
+  path: ENDPOINTS.USERS.USERS
+}))
 
-  const response = await api.getLocations()
+test('Get locations', simpleRouteTest({
+  apiHandler: 'getLocations',
+  path: ENDPOINTS.LOCATIONS.LOCATIONS
+}))
 
-  expect(response).toStrictEqual([])
-  expect(get).toHaveBeenCalledWith(ENDPOINTS.LOCATIONS.LOCATIONS(), {
-    api,
-    token: undefined,
-    middleware: [ autoLogin ]
-  })
-})
+test('Create location', simpleRouteTest({
+  apiHandler: 'createLocation',
+  path: ENDPOINTS.LOCATIONS.CREATE_LOCATION,
+  verb: 'post',
+  body: '__body__',
+  requestConfig: { body: '__body__' }
+}))
 
-test('createLocation should send location with autologin', async () => {
-  const responseValue = uuid()
-  const post = jest.fn().mockReturnValue(responseValue)
-  const base = { post }
-  const { api } = createAPI(base)
-  const body = uuid()
+test('Delete location', simpleRouteTest({
+  apiHandler: 'deleteLocation',
+  path: ENDPOINTS.LOCATIONS.DELETE_LOCATION,
+  verb: 'delete',
+  id: uuid()
+}))
 
-  const response = await api.createLocation(body)
+test('Get outbreaks', simpleRouteTest({
+  apiHandler: 'getOutbreaks',
+  path: ENDPOINTS.OUTBREAKS.OUTBREAKS
+}))
 
-  expect(response).toBe(responseValue)
-  expect(post).toHaveBeenCalledWith(ENDPOINTS.LOCATIONS.CREATE_LOCATION(), {
-    api,
-    token: undefined,
-    middleware: [ autoLogin ],
-    body
-  })
-})
+test('Create outbreak', simpleRouteTest({
+  apiHandler: 'createOutbreak',
+  path: ENDPOINTS.OUTBREAKS.CREATE_OUTBREAK,
+  verb: 'post',
+  body: '__outbreak__',
+  requestConfig: { body: '__outbreak__' }
+}))
 
-test('deleteLocation should call correct endpoint with autologin', async () => {
-  const id = uuid()
-  const responseValue = uuid()
-  const delete_ = jest.fn().mockReturnValue(responseValue)
-  const base = { delete: delete_ }
-  const { api } = createAPI(base)
-  
-  const response = await api.deleteLocation(id)
-
-  expect(response).toBe(responseValue)
-  expect(delete_).toHaveBeenCalledWith(ENDPOINTS.LOCATIONS.DELETE_LOCATION(id), {
-    api,
-    token: undefined,
-    middleware: [ autoLogin ]
-  })
-})
-
-test('getOutbreaks should call correct endpoint with autologin', async () => {
-  const get = jest.fn().mockReturnValue([])
-  const base = { get }
-  const { api } = createAPI(base)
-  
-  const response = await api.getOutbreaks()
-
-  expect(response).toStrictEqual([])
-  expect(get).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.OUTBREAKS(), {
-    api,
-    token: undefined,
-    middleware: [ autoLogin ]
-  })
-})
-
-test('createOutbreak should send outbreak with autologin', async () => {
+test('Delete outbreak', async () => {
   const returnValue = uuid()
-  const post = jest.fn().mockReturnValue(returnValue)
-  const base = { post }
-  const { api } = createAPI(base)
-  const body = uuid()
-
-  const response = await api.createOutbreak(body)
-
-  expect(response).toBe(returnValue)
-  expect(post).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.CREATE_OUTBREAK(), {
-    api,
-    token: undefined,
-    middleware: [ autoLogin ],
-    body
-  })
-})
-
-test('deleteOutbreak should call correct endpoint with autologin', async () => {
-  const returnValue = uuid()
+  const outbreakID = uuid()
+  const userID = uuid()
+  const get = jest.fn().mockReturnValue(Promise.resolve([
+    { id: userID, activeOutbreakId: outbreakID } ]))
+  const patch = jest.fn().mockReturnValue(Promise.resolve())
   const delete_ = jest.fn().mockReturnValue(returnValue)
-  const base = { delete: delete_ }
+  const base = { get, patch, delete: delete_ }
   const { api } = createAPI(base)
   const id = uuid()
 
-  const response = await api.deleteOutbreak(id)
+  const response = await api.deleteOutbreak(outbreakID)
 
   expect(response).toBe(returnValue)
-  expect(delete_).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.DELETE_OUTBREAK(id), {
+  expect(get).toHaveBeenCalledWith(ENDPOINTS.USERS.USERS(), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ]
+  })
+  expect(patch).toHaveBeenCalledWith(ENDPOINTS.USERS.PATCH_USER(userID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ],
+    body: { activeOutbreakId: null }
+  })
+  expect(delete_).toHaveBeenCalledWith(ENDPOINTS.OUTBREAKS.DELETE_OUTBREAK(outbreakID), {
     api,
     token: undefined,
     middleware: [ autoLogin ]
   })
 })
+
+test('Activate outbreak for user', simpleRouteTest({
+  apiHandler: 'activateOutbreakForUser',
+  path: ENDPOINTS.USERS.PATCH_USER,
+  verb: 'patch',
+  id: uuid(),
+  body: '__outbreakID__',
+  requestConfig: { body: { activeOutbreakId: '__outbreakID__' } }
+}))
+
+test('Remove active outbreak from user', simpleRouteTest({
+  apiHandler: 'removeActiveOutbreakFromUser',
+  path: ENDPOINTS.USERS.PATCH_USER,
+  verb: 'patch',
+  id: uuid(),
+  requestConfig: { body: { activeOutbreakId: null } }
+}))
+
+test('Get outbreak\'s cases', simpleRouteTest({
+  apiHandler: 'getOutbreakCases',
+  path: ENDPOINTS.CASES.OUTBREAK_CASES,
+  id: uuid()
+}))
+
+test('Get outbreak case', async () => {
+  const mockReturnValue = uuid()
+  const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { get: mock }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+
+  const response = await api.getOutbreakCase(outbreakID, caseID)
+
+  expect(response).toStrictEqual(mockReturnValue)
+  expect(mock).toHaveBeenCalledWith(ENDPOINTS.CASES.OUTBREAK_CASE(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ]
+  })
+})
+
+test('Create outbreak case', simpleRouteTest({
+  apiHandler: 'createOutbreakCase',
+  path: ENDPOINTS.CASES.CREATE_OUTBREAK_CASE,
+  verb: 'post',
+  id: uuid(),
+  body: '__case__',
+  requestConfig: { body: '__case__' }
+}))
+
+test('Get outbreak case', async () => {
+  const mockReturnValue = uuid()
+  const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { delete: mock }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+
+  const response = await api.deleteOutbreakCase(outbreakID, caseID)
+
+  expect(response).toStrictEqual(mockReturnValue)
+  expect(mock).toHaveBeenCalledWith(ENDPOINTS.CASES.OUTBREAK_CASE(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ]
+  })
+})
+
+function simpleRouteTest ({
+  apiHandler,
+  path,
+  verb = 'get',
+  body,
+  id,
+  requestConfig = {}
+} = {}) {
+  return async () => {
+    const mockReturnValue = uuid()
+    const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+    const base = { [verb]: mock }
+    const { api } = createAPI(base)
+
+    const response = body == null
+      ? id == null
+        ? await api[apiHandler]()
+        : await api[apiHandler](id)
+      : id == null
+        ? await api[apiHandler](body)
+        : await api[apiHandler](id, body)
+
+    expect(response).toStrictEqual(mockReturnValue)
+    expect(mock).toHaveBeenCalledWith(id != null ? path(id) : path(), {
+      api,
+      token: undefined,
+      middleware: [ autoLogin ],
+      ...requestConfig
+    })
+  }
+}
 
 function loginTest (credentials) {
   return async () => {
