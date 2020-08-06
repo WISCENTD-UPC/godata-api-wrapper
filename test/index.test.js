@@ -1,5 +1,5 @@
 
-const { v1: uuid } = require('uuid')
+const { v4: uuid } = require('uuid')
 
 const API = require('../index.js')
 const { autoLogin } = require('../src/middleware')

@@ -1,5 +1,5 @@
 
-const { v1: uuid } = require('uuid')
+const { v4: uuid } = require('uuid')
 const R = require('ramda')
 
 const { autoLogin } = require('../src/middleware')
