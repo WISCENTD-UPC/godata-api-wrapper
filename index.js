@@ -145,5 +145,13 @@ module.exports = class {
     })
     return this._base.delete(ENDPOINTS.CASES.DELETE_OUTBREAK_CASE(outbreakID, caseID), request)
   }
+
+  createCaseContact (outbreakID, caseID, contact) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ],
+      body: contact
+    })
+    return this._base.post(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), request)
+  }
 }
 

@@ -145,7 +145,7 @@ test('Create outbreak case', simpleRouteTest({
   requestConfig: { body: '__case__' }
 }))
 
-test('Get outbreak case', async () => {
+test('Delete outbreak case', async () => {
   const mockReturnValue = uuid()
   const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
   const base = { delete: mock }
@@ -160,6 +160,26 @@ test('Get outbreak case', async () => {
     api,
     token: undefined,
     middleware: [ autoLogin ]
+  })
+})
+
+test('Create case contact', async () => {
+  const mockReturnValue = uuid()
+  const post = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { post }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+  const contact = uuid()
+
+  const response = await api.createCaseContact(outbreakID, caseID, contact)
+
+  expect(response).toBe(mockReturnValue)
+  expect(post).toHaveBeenCalledWith(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ],
+    body: contact
   })
 })
 

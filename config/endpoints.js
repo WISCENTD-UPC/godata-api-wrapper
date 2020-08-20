@@ -19,7 +19,8 @@ module.exports = {
     OUTBREAK_CASES: (outbreakID) => `/outbreaks/${outbreakID}/cases`,
     OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
     CREATE_OUTBREAK_CASE: (outbreakID) => `/outbreaks/${outbreakID}/cases`,
-    DELETE_OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`
+    DELETE_OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
+    CREATE_CONTACT: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/contacts`
   }
 }
 
