@@ -170,16 +170,16 @@ test('Create case contact', async () => {
   const outbreakID = uuid()
   const caseID = uuid()
   const { api } = createAPI(base)
-  const contact = uuid()
+  const contacts = [ uuid(), uuid() ]
 
-  const response = await api.createCaseContact(outbreakID, caseID, contact)
+  const response = await api.createCaseContacts(outbreakID, caseID, contacts)
 
   expect(response).toBe(mockReturnValue)
   expect(post).toHaveBeenCalledWith(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), {
     api,
     token: undefined,
     middleware: [ autoLogin ],
-    body: contact
+    body: [ { contact: contacts[0] }, { contact: contacts[1] } ]
   })
 })
 
