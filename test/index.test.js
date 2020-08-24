@@ -183,6 +183,26 @@ test('Create case contact', async () => {
   })
 })
 
+test('Create case relationship', async () => {
+  const mockReturnValue = uuid()
+  const post = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { post }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+  const relationship = uuid()
+
+  const response = await api.createCaseContacts(outbreakID, caseID, relationship)
+
+  expect(response).toBe(mockReturnValue)
+  expect(post).toHaveBeenCalledWith(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ],
+    body: relationship
+  })
+})
+
 function simpleRouteTest ({
   apiHandler,
   path,

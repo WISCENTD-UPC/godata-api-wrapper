@@ -153,5 +153,13 @@ module.exports = class {
     })
     return this._base.post(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), request)
   }
+
+  createCaseRelationship (outbreakID, caseID, relationship) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ],
+      body: relationship
+    })
+    return this._base.post(ENDPOINTS.CASES.CREATE_RELATIONSHIP(outbreakID, caseID), request)
+  }
 }
 
