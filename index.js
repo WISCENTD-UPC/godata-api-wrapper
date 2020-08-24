@@ -149,7 +149,7 @@ module.exports = class {
   createCaseContacts (outbreakID, caseID, contacts) {
     const request = this.createRequest({
       middleware: [ autoLogin ],
-      body: R.map(_ => ({ contact: _ }), contacts)
+      body: contacts
     })
     return this._base.post(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), request)
   }

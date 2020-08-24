@@ -179,7 +179,7 @@ test('Create case contact', async () => {
     api,
     token: undefined,
     middleware: [ autoLogin ],
-    body: [ { contact: contacts[0] }, { contact: contacts[1] } ]
+    body: contacts
   })
 })
 
