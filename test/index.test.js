@@ -192,14 +192,42 @@ test('Create case relationship', async () => {
   const { api } = createAPI(base)
   const relationship = uuid()
 
-  const response = await api.createCaseContacts(outbreakID, caseID, relationship)
+  const response = await api.createCaseRelationship(outbreakID, caseID, relationship)
 
   expect(response).toBe(mockReturnValue)
-  expect(post).toHaveBeenCalledWith(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), {
+  expect(post).toHaveBeenCalledWith(ENDPOINTS.CASES.CREATE_RELATIONSHIP(outbreakID, caseID), {
     api,
     token: undefined,
     middleware: [ autoLogin ],
     body: relationship
+  })
+})
+
+test('Create case relationships', async () => {
+  const mockReturnValue = [ uuid(), uuid() ]
+  const post = jest.fn()
+    .mockReturnValueOnce(Promise.resolve(mockReturnValue[0]))
+    .mockReturnValueOnce(Promise.resolve(mockReturnValue[1]))
+  const base = { post }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+  const relationships = [ uuid(), uuid() ]
+
+  const response = await api.createCaseRelationships(outbreakID, caseID, relationships)
+
+  expect(response).toStrictEqual(mockReturnValue)
+  expect(post).toHaveBeenNthCalledWith(1, ENDPOINTS.CASES.CREATE_RELATIONSHIP(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ],
+    body: relationships[0]
+  })
+  expect(post).toHaveBeenNthCalledWith(2, ENDPOINTS.CASES.CREATE_RELATIONSHIP(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ],
+    body: relationships[1]
   })
 })
 

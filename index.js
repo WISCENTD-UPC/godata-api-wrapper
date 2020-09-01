@@ -161,5 +161,12 @@ module.exports = class {
     })
     return this._base.post(ENDPOINTS.CASES.CREATE_RELATIONSHIP(outbreakID, caseID), request)
   }
+
+  createCaseRelationships (outbreakID, caseID, relationships) {
+    return Promise.all(R.map(
+      R.partial(this.createCaseRelationship.bind(this), [ outbreakID, caseID ]),
+      relationships
+    ))
+  }
 }
 
