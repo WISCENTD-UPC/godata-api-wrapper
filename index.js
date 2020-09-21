@@ -12,8 +12,13 @@ module.exports = class {
   constructor (opts = {}) {
     this.baseURL = opts.baseURL || ''
     this.credentials = opts.credentials || {}
+    this.debug = opts.debug || false
     this.fetch = opts.fetch || fetch
-    this._base = opts._base || new Base({ baseURL: this.baseURL, fetch: this.fetch })
+    this._base = opts._base || new Base({
+      baseURL: this.baseURL,
+      fetch: this.fetch,
+      debug: this.debug
+    })
     this._Date = opts._Date || Date
   }
 

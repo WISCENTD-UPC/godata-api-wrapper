@@ -12,11 +12,14 @@ const applyMiddleware = require('./apply-middleware')
 module.exports = class Base {
   constructor (opts = {}) {
     this.baseURL = opts.baseURL || ''
+    this.debug = opts.debug || false
     this.fetch = opts.fetch || fetch
   }
 
   logRequest (method, path, config) {
-    console.log(`${method} ${path}`)
+    if (this.debug === true) {
+      console.log(`${method} ${path}`)
+    }
   }
 
   url (path) {
