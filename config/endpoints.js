@@ -22,6 +22,11 @@ module.exports = {
     DELETE_OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
     CREATE_CONTACT: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/contacts`,
     CREATE_RELATIONSHIP: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/relationships`
+  },
+  REFERENCE_DATA: {
+    REFERENCE_DATA: () => '/reference-data',
+    CREATE_REFERENCE_DATA: () => '/reference-data',
+    DELETE_REFERENCE_DATA: (id) => `/reference-data/${id}`
   }
 }
 

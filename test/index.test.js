@@ -231,6 +231,26 @@ test('Create case relationships', async () => {
   })
 })
 
+test('Get reference data', simpleRouteTest({
+  apiHandler: 'getReferenceData',
+  path: ENDPOINTS.REFERENCE_DATA.REFERENCE_DATA
+}))
+
+test('Create reference data', simpleRouteTest({
+  apiHandler: 'createReferenceData',
+  path: ENDPOINTS.REFERENCE_DATA.CREATE_REFERENCE_DATA,
+  verb: 'post',
+  body: '__reference_data__',
+  requestConfig: { body: '__reference_data__' }
+}))
+
+test('Delete reference data', simpleRouteTest({
+  apiHandler: 'deleteReferenceData',
+  path: ENDPOINTS.REFERENCE_DATA.DELETE_REFERENCE_DATA,
+  id: '__id__',
+  verb: 'delete'
+}))
+
 function simpleRouteTest ({
   apiHandler,
   path,
