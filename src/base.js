@@ -3,7 +3,7 @@
 const FormData = require('form-data')
 
 // Third-party libraries
-const fetch = require('node-fetch')
+const fetch = require('isomorphic-fetch')
 
 // Project modules
 const qs = require('query-string')
