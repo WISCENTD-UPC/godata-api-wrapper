@@ -1,6 +1,6 @@
 
 // Thrid-party libraries
-const fetch = require('node-fetch')
+const fetch = require('isomorphic-fetch')
 const R = require('ramda')
 
 // Project modules
