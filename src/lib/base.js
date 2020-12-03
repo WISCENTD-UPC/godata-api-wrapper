@@ -1,15 +1,15 @@
 
 // Node.js modules
-const FormData = require('form-data')
+import FormData from 'form-data'
 
 // Third-party libraries
-const fetch = require('isomorphic-fetch')
+import fetch from 'isomorphic-fetch'
 
 // Project modules
-const qs = require('query-string')
-const applyMiddleware = require('./apply-middleware')
+import qs from 'query-string'
+import applyMiddleware from './apply-middleware'
 
-module.exports = class Base {
+export default class Base {
   constructor (opts = {}) {
     this.baseURL = opts.baseURL || ''
     this.debug = opts.debug || false

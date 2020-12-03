@@ -1,9 +1,9 @@
 
-const { v4: uuid } = require('uuid')
+import { v4 as uuid } from 'uuid'
 
-const API = require('../index.js')
-const { autoLogin } = require('../src/middleware')
-const ENDPOINTS = require('../config/endpoints')
+import API from '../src/index.js'
+import { autoLogin } from '../src/lib/middleware'
+import ENDPOINTS from '../src/config/endpoints'
 
 test('API is created correctly', () => {
   const { APIConfig, api } = createAPI()

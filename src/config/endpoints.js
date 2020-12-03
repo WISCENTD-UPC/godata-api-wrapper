@@ -1,5 +1,5 @@
 
-module.exports = {
+export default {
   USERS: {
     LOGIN: () => '/users/login',
     USERS: () => '/users',

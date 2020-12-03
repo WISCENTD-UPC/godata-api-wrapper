@@ -1,8 +1,8 @@
 
-const { v4: uuid } = require('uuid')
-const R = require('ramda')
+import { v4 as uuid } from 'uuid'
+import R from 'ramda'
 
-const applyMiddleware = require('../src/apply-middleware')
+import applyMiddleware from '../src/lib/apply-middleware'
 
 test('applyMiddleware should export a function', () => {
   expect(typeof applyMiddleware).toBe('function')

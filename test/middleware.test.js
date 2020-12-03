@@ -1,8 +1,8 @@
 
-const { v4: uuid } = require('uuid')
-const R = require('ramda')
+import { v4 as uuid } from 'uuid'
+import R from 'ramda'
 
-const { autoLogin } = require('../src/middleware')
+import { autoLogin } from '../src/lib/middleware'
 
 const basicCTX = {
   config: {

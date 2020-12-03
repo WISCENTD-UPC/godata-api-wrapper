@@ -1,14 +1,14 @@
 
 // Thrid-party libraries
-const fetch = require('isomorphic-fetch')
-const R = require('ramda')
+import fetch from 'isomorphic-fetch'
+import R from 'ramda'
 
 // Project modules
-const Base = require('./src/base')
-const { autoLogin } = require('./src/middleware')
-const ENDPOINTS = require('./config/endpoints')
+import Base from './lib/base'
+import { autoLogin } from './lib/middleware'
+import ENDPOINTS from './config/endpoints'
 
-module.exports = class {
+export default class {
   constructor (opts = {}) {
     this.baseURL = opts.baseURL || ''
     this.credentials = opts.credentials || {}

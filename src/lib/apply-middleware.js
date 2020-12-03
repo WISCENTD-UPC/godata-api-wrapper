@@ -1,8 +1,8 @@
 
 // Third-party libraries
-const R = require('ramda')
+import R from 'ramda'
 
-module.exports = function applyMiddleware (middleware, method, path, config, base) {
+export default function applyMiddleware (middleware, method, path, config, base) {
   const next = (middleware) => (err, ctx) => {
     if (err == null) {
       if (middleware.length > 0) {

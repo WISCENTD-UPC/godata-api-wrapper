@@ -1,7 +1,7 @@
 
-const TOKEN_SAFE_THRESHOLD = 10
+export const TOKEN_SAFE_THRESHOLD = 10
 
-async function autoLogin (next, ctx, _ = {}) {
+export async function autoLogin (next, ctx, _ = {}) {
   const token = ctx.config.token
   if (token != null && (Date.now() - token.lastRefresh) / 1000 + TOKEN_SAFE_THRESHOLD < token.ttl) {
     ctx.config.query.access_token = token.value
@@ -21,6 +21,4 @@ async function autoLogin (next, ctx, _ = {}) {
     }
   }
 }
-
-module.exports = { autoLogin, TOKEN_SAFE_THRESHOLD }
 
