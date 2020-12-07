@@ -1,6 +1,6 @@
 
 import { v4 as uuid } from 'uuid'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import applyMiddleware from '../src/lib/apply-middleware'
 

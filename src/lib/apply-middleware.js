@@ -1,6 +1,6 @@
 
 // Third-party libraries
-import R from 'ramda'
+import * as R from 'ramda'
 
 export default function applyMiddleware (middleware, method, path, config, base) {
   const next = (middleware) => (err, ctx) => {

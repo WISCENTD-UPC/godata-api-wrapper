@@ -1,7 +1,7 @@
 
 // Thrid-party libraries
 import fetch from 'isomorphic-fetch'
-import R from 'ramda'
+import * as R from 'ramda'
 
 // Project modules
 import Base from './lib/base'
