@@ -20,7 +20,9 @@ export default {
     OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
     CREATE_OUTBREAK_CASE: (outbreakID) => `/outbreaks/${outbreakID}/cases`,
     DELETE_OUTBREAK_CASE: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}`,
+    CASE_CONTACTS: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/relationships/contacts`,
     CREATE_CONTACT: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/contacts`,
+    CASE_RELATIONSHIPS: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/relationships`,
     CREATE_RELATIONSHIP: (outbreakID, caseID) => `/outbreaks/${outbreakID}/cases/${caseID}/relationships`
   },
   REFERENCE_DATA: {

@@ -151,12 +151,26 @@ export default class {
     return this._base.delete(ENDPOINTS.CASES.DELETE_OUTBREAK_CASE(outbreakID, caseID), request)
   }
 
+  getCaseContacts (outbreakID, caseID) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ]
+    })
+    return this._base.get(ENDPOINTS.CASES.CASE_CONTACTS(outbreakID, caseID), request)
+  }
+
   createCaseContacts (outbreakID, caseID, contacts) {
     const request = this.createRequest({
       middleware: [ autoLogin ],
       body: contacts
     })
     return this._base.post(ENDPOINTS.CASES.CREATE_CONTACT(outbreakID, caseID), request)
+  }
+
+  getCaseRelationships (outbreakID, caseID) {
+    const request = this.createRequest({
+      middleware: [ autoLogin ]
+    })
+    return this._base.get(ENDPOINTS.CASES.CASE_RELATIONSHIPS(outbreakID, caseID), request)
   }
 
   createCaseRelationship (outbreakID, caseID, relationship) {

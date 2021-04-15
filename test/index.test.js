@@ -163,6 +163,24 @@ test('Delete outbreak case', async () => {
   })
 })
 
+test('Get case contacts', async () => {
+  const mockReturnValue = uuid()
+  const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { get: mock }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+
+  const response = await api.getCaseContacts(outbreakID, caseID)
+
+  expect(response).toStrictEqual(mockReturnValue)
+  expect(mock).toHaveBeenCalledWith(ENDPOINTS.CASES.CASE_CONTACTS(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ]
+  })
+})
+
 test('Create case contact', async () => {
   const mockReturnValue = uuid()
   const post = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
@@ -180,6 +198,24 @@ test('Create case contact', async () => {
     token: undefined,
     middleware: [ autoLogin ],
     body: contacts
+  })
+})
+
+test('Get case relationships', async () => {
+  const mockReturnValue = uuid()
+  const mock = jest.fn().mockReturnValue(Promise.resolve(mockReturnValue))
+  const base = { get: mock }
+  const outbreakID = uuid()
+  const caseID = uuid()
+  const { api } = createAPI(base)
+
+  const response = await api.getCaseRelationships(outbreakID, caseID)
+
+  expect(response).toStrictEqual(mockReturnValue)
+  expect(mock).toHaveBeenCalledWith(ENDPOINTS.CASES.CASE_RELATIONSHIPS(outbreakID, caseID), {
+    api,
+    token: undefined,
+    middleware: [ autoLogin ]
   })
 })
 
